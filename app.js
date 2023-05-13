@@ -3,11 +3,18 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const Influencer = require('./app_api/db/influencer.js')
 const Business = require('./app_api/db/business.js')
+const passport = require('passport')
+const logger = require('morgan')
+const cookies = require("cookie-parser");
 require('./app_api/db/db.js')
+require('./app_api/passport')
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
+app.use(passport.initialize())
+app.use(logger('dev'))
+app.use(cookies());
 
 var indexApi = require('./app_api/routes/index.js');
 
