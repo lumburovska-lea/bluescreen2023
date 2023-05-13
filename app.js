@@ -13,6 +13,16 @@ var indexApi = require('./app_api/routes/index.js');
 
 app.use('/api', indexApi)
 
+app.get('/business', async (req, res) => {
+  try {
+    const users = await Business.Business.find({});
+    console.log(users);
+    res.json(users);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
