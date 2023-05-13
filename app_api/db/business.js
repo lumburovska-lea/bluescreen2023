@@ -6,6 +6,6 @@ const businessSchema = new mongoose.Schema({
   bio: String
 });
 
-const Business = mongoose.model('Business', businessSchema, 'business');
+const Business = mongoose.model('Business', businessSchema, 'businesses');
 
 module.exports = {Business}

@@ -13,11 +13,21 @@ var indexApi = require('./app_api/routes/index.js');
 
 app.use('/api', indexApi)
 
-app.get('/business', async (req, res) => {
+app.get('/businesses', async (req, res) => {
   try {
-    const users = await Business.Business.find({});
-    console.log(users);
-    res.json(users);
+    const businesses = await Business.Business.find({});
+    console.log(businesses);
+    res.json(businesses);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+app.get('/influencers', async (req, res) => {
+  try {
+    const influencers = await Influencer.Influencer.find({});
+    console.log(influencers);
+    res.json(influencers);
   } catch (error) {
     res.status(500).send(error);
   }
