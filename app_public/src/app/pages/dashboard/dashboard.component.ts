@@ -25,8 +25,11 @@ export class DashboardComponent implements OnInit {
   public salesChart;
   public clicked: boolean = true;
   public clicked1: boolean = false;
+  public allInfluencers: Influencer[];
 
   ngOnInit() {
+
+    this.getInfluencers()
 
     this.datasets = [
       [0, 20, 10, 30, 15, 40, 20, 60, 60],
@@ -65,9 +68,10 @@ export class DashboardComponent implements OnInit {
     console.log("u dashboard")
     this.restService
         .getInfluencers()
-        .subscribe((influencers: Influencer) => {
+        .subscribe((influencers: Influencer[]) => {
         console.log("vo hdashboardome e")
         console.log(influencers);
+        this.allInfluencers = influencers;
     }, (err) => {
         console.log(err)
         });

@@ -15,13 +15,13 @@ export class RestService {
 
   private apiUrl = "http://localhost:3000/api";
 
-  public getInfluencers(): Observable<Influencer> {
+  public getInfluencers(): Observable<Influencer[]> {
     console.log("vo get nfluencer rest service")
 
     const url: string =`${this.apiUrl}/influencers`;
     console.log(url);
     return this.http
-        .get<Influencer>(url)
+        .get<Influencer[]>(url)
         .pipe(retry(1), catchError(this.obdelajNapako))
   }
 
