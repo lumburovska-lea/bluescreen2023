@@ -7,7 +7,9 @@ const influencerSchema = new mongoose.Schema({
   bio: String,
   age: Number,
   country: String,
-  contentType: String
+  tags: [{
+    type: String
+  }]
 });
 
 const Influencer = mongoose.model('Influencer', influencerSchema, 'influencer');

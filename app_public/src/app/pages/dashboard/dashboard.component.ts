@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js';
+import {RestService} from "../../rest.service";
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 
 // core components
 import {
@@ -15,6 +17,8 @@ import {
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+
+  constructor(private restService: RestService, private route: ActivatedRoute) { }
 
   public datasets: any;
   public data: any;
@@ -57,4 +61,29 @@ export class DashboardComponent implements OnInit {
     this.salesChart.update();
   }
 
+  getInfluencers(){
+    console.log("u dashboard")
+    this.restService
+        .getInfluencers()
+        .subscribe((influencers: Influencer) => {
+        console.log("vo hdashboardome e")
+        console.log(influencers);
+    }, (err) => {
+        console.log(err)
+        });
+  }
+}
+  
+
+export class Influencer {
+  "_id" : string;
+  "name": string;
+  "surname": String;
+  "email": String;
+  "bio": string;
+  "age": Number;
+  "country": String;
+  "tags": [{
+    type: String
+  }]
 }
