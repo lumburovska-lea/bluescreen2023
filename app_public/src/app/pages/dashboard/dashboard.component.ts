@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js';
 import {RestService} from "../../rest.service";
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { InfluencerPopUpComponent } from 'src/app/influencer-pop-up/influencer-pop-up.component';
 
 // core components
 import {
@@ -18,7 +20,9 @@ import {
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private restService: RestService, private route: ActivatedRoute) { }
+  constructor(private restService: RestService, 
+        private route: ActivatedRoute,
+        private modalService: NgbModal) { }
 
   public datasets: any;
   public data: any;
@@ -75,6 +79,11 @@ export class DashboardComponent implements OnInit {
     }, (err) => {
         console.log(err)
         });
+  }
+
+  openInfluencer(id: any) {
+    const modalRef = this.modalService.open(InfluencerPopUpComponent);
+    modalRef.componentInstance.id = id;
   }
 }
   

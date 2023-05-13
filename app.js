@@ -40,6 +40,19 @@ app.get('/influencers', async (req, res) => {
   }
 });
 
+app.get('/influencers/:id', async (req, res, next) => {
+  try {
+    const influencer = await Influencer.Influencer.findById(req.params.id);
+    if (!influencer) {
+      return res.status(404).json({ error: 'Influencer not found' });
+    }
+    console.log(influencer);
+    res.json(influencer);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

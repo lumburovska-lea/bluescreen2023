@@ -25,6 +25,16 @@ export class RestService {
         .pipe(retry(1), catchError(this.obdelajNapako))
   }
 
+  public getInfluencerById(id: String): Observable<Influencer> {
+    console.log("vo get nfluencer rest service")
+
+    const url: string =`${this.apiUrl}/influencers/${id}`;
+    console.log(url);
+    return this.http
+        .get<Influencer>(url)
+        .pipe(retry(1), catchError(this.obdelajNapako))
+  }
+
   public obdelajNapako(napaka: HttpErrorResponse) {
 
     return throwError(

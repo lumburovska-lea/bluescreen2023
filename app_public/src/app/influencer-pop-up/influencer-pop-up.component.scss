@@ -1,0 +1,8 @@
+.ng-modal .modal-content{
+    z-index: 2000;
+    color: aquamarine;
+}
+
+ngb-modal-backdrop.modal-backdrop {
+    z-index: -1 !important;
+}

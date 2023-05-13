@@ -7112,7 +7112,7 @@ button.close
 .modal-backdrop
 {
     position: fixed;
-    z-index: 1040;
+    z-index: -1!important;
     top: 0;
     right: 0;
     bottom: 0;
@@ -7122,10 +7122,12 @@ button.close
 }
 .modal-backdrop.fade
 {
+    z-index: -1!important;
     opacity: 0;
 }
 .modal-backdrop.show
 {
+    z-index: -1!important;
     opacity: .16;
 }
 
@@ -19141,7 +19143,7 @@ textarea[resize='horizontal']
 .navbar-vertical .navbar-brand > img
 {
     max-width: 100%;
-    max-height: 2rem;
+    max-height: 20px;
 }
 @media (min-width: 768px)
 {

@@ -1,0 +1,16 @@
+
+<div class="ng-modal" style="background-color: #e3e3e3; z-index:2000">
+    <div class="modal-header">
+      <h2 class="modal-title">{{influencer.name}} {{influencer.surname}}</h2>
+    </div>
+    <div class="modal-body">
+        <p>{{influencer.bio}}</p>
+        <div style="display: flex;">
+            <div *ngFor="let tag of influencer.tags">
+            <h5 class="card-title text-uppercase text-muted mb-0" style="padding-right: 8px;">{{tag}}</h5>
+            </div>
+        </div>
+        <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('Cross click')">Close</button>
+        <button  type="button" class="btn btn-primary" (click)="contactInfluencer()" >Contact</button>
+    </div>
+  </div>

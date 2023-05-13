@@ -933,6 +933,9 @@ $modal-header-border-width:   $modal-content-border-width !default;
 $modal-footer-border-width:   $modal-header-border-width !default;
 $modal-header-padding:        1.25rem !default;
 
+$zindex-modal-backdrop: 104 !important; // fix for ng-bootstrap 3.2.0 todo: remove if fixed
+$zindex-ng-modal: 105;
+
 // Datepicker
 
 $datepicker-border-radius: $card-border-radius !default;
