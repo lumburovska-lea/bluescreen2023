@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bCrypt = require('bcrypt-nodejs');
+const jwtSecret = require('crypto').randomBytes(16)
 
 const businessSchema = new mongoose.Schema({
   name: String,
@@ -9,13 +10,8 @@ const businessSchema = new mongoose.Schema({
 });
 
 businessSchema.methods.comparePassword = function(password, callback) {
-  bCrypt.compare(this.password, password, function(err, result) {
-    if(err)
-      callback(err, false)
-    else
-      callback(null, result)
-  });
-
+  var result = this.password === password
+  callback(null, result)
 }
 
 const Business = mongoose.model('Business', businessSchema, 'businesses');

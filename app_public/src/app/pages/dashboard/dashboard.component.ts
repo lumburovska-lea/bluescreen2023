@@ -20,7 +20,7 @@ import {
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private restService: RestService, 
+  constructor(private restService: RestService,
         private route: ActivatedRoute,
         private modalService: NgbModal) { }
 
@@ -30,8 +30,12 @@ export class DashboardComponent implements OnInit {
   public clicked: boolean = true;
   public clicked1: boolean = false;
   public allInfluencers: Influencer[];
+  public logged = 'false';
 
   ngOnInit() {
+
+    this.logged = localStorage.getItem("logged");
+    console.log(this.logged)
 
     this.getInfluencers()
 
@@ -85,7 +89,7 @@ export class DashboardComponent implements OnInit {
     modalRef.componentInstance.id = id;
   }
 }
-  
+
 
 export class Influencer {
   "_id" : string;

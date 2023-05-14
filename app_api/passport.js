@@ -3,7 +3,7 @@ const LocalStrategy = require('passport-local').Strategy
 const jwt = require('jsonwebtoken')
 const JwtStrategy = require('passport-jwt').Strategy
 const cookies = require("cookie-parser");
-const jwtSecret = require('crypto').randomBytes(16)
+const jwtSecret = require('./jwtsecret');
 const {Business} = require("./db/business");
 
 passport.use('username-password', new LocalStrategy(
@@ -16,16 +16,12 @@ passport.use('username-password', new LocalStrategy(
         console.log(`Authentication attempt for username: ${email}, password: ${password}`)
         Business.findOne({email: email}).then((user) => {
             if (user) {
-                console.log(user)
                 user.comparePassword(password, (error, match) => {
                     if (error) {
-                        console.log(error)
                         return done(error, false)
                     }
                     if (match) {
-                        console.log('here2')
                         return done(null, user)
-
                     }
                     return done(null, false)
                 })
@@ -37,3 +33,25 @@ passport.use('username-password', new LocalStrategy(
         })
     }
 ))
+
+passport.use('jwtCookie', new JwtStrategy(
+    {
+        jwtFromRequest: (req) => {
+            console.log(req.cookies)
+            if (req && req.cookies) {
+                return req.cookies.jwt }
+            return null
+        },
+        secretOrKey: jwtSecret,
+    }, verify
+), )
+
+function verify (jwtPayload, done) {
+    const user = Business.findOne({email: jwtPayload.sub})
+    if (!user) {
+        console.log(`user not authorized`)
+        return done(null, false)
+    }
+    console.log(`user authorized`)
+    return done(null, user) //
+}

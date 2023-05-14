@@ -23,11 +23,26 @@ export class SidebarComponent implements OnInit {
 
   public menuItems: any[];
   public isCollapsed = true;
+  public logged = 'false';
 
   constructor(private router: Router) { }
 
   ngOnInit() {
+    this.logged = localStorage.getItem("logged");
+
     this.menuItems = ROUTES.filter(menuItem => menuItem);
+    var todelete = []
+    console.log(this.menuItems)
+    if(this.logged == 'true') {
+      for(var i = 0; i < 4; i++) {
+        console.log(this.menuItems[i].path)
+        if(this.menuItems[i].path === '/login' || this.menuItems[i].path === '/register') {
+          this.menuItems.splice(i, 1)
+          i--;
+        }
+      }
+    }
+
     this.router.events.subscribe((event) => {
       this.isCollapsed = true;
    });

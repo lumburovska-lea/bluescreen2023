@@ -5,6 +5,7 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const passport = require('passport')
 const jwt = require("jsonwebtoken");
+const jwtSecret = require('../jwtsecret');
 router.use(bodyParser.json());
 
 router.get('/businesses', async (req, res, next) => {
@@ -83,32 +84,62 @@ router.delete('/influencers/:id', async (req, res, next) => {
   }
 });
 
-router.post('/businesses/login', (req, res, next) => {
-  passport.authenticate('username-password', { session: false }, (err, user, info) => {
-    if (err) {
-      return res.status(500).json({ error: 'An internal server error occurred' });
-    }
-    if (!user) {
-      return res.status(401).json({ error: 'Invalid email or password' });
-    }
+router.post('/businesses/login',
+    passport.authenticate('username-password', { failureRedirect: '/login', session: false }),
+        (req, res) => {
+  console.log(req.cookies)
 
-    const jwtClaims = {
-      sub: user.email,
-      iss: 'localhost:3000',
-      aud: 'localhost:3000',
-      exp: Math.floor(Date.now() / 1000) + 604800, // 1 week (7×24×60×60=604800s) from now
-      role: 'user', // just to show a private JWT field
-    };
+          const jwtClaims = {
+            sub: req.user.email,
+            iss: 'localhost:3000',
+            aud: 'localhost:3000',
+            exp: Math.floor(Date.now() / 1000) + 604800, // 1 week (7×24×60×60=604800s) from now
+            role: 'business', // just to show a private JWT field
+          }
 
-    const token = jwt.sign(jwtClaims, jwtSecret);
-    cookieOptions = {
-      httpOnly: true,
-      secure: true,
-      sameSite: true,
-    };
-    res.cookie('jwt', token, cookieOptions);
-    res.json({ message: 'Login successful' });
-  })(req, res, next);
+          // generate a signed json web token. By default the signing algorithm is HS256 (HMAC-SHA256), i.e. we will 'sign' with a symmetric secret
+          const token = jwt.sign(jwtClaims, jwtSecret)
+
+          // From now, just send the JWT directly to the browser. Later, you should send the token inside a cookie.
+
+          // We can also send the token inside a cookie, which is more secure, but it's not supported by all browsers.
+          // Below we send the token inside a cookie named 'jwt' and we set the cookie to expire in 1 week.
+          cookieOptions = {
+            httpOnly: true,
+            secure: false,
+            sameSite: 'None'
+          }
+          console.log(token)
+          res.cookie('jwt', token, cookieOptions)
+          res.send({jwt: token})
+
+          // And let us log a link to the jwt.io debugger, for easy checking/verifying:
+          // console.log(`Token sent. Debug at https://jwt.io/?value=${token}`)
+
+        }
+    )
+
+router.post('/businesses/register', async (req, res) => {
+  const { name, email, bio, password } = req.body;
+
+  try {
+    // Create a new business object
+    const newBusiness = new Business({
+      name,
+      email,
+      bio,
+      password,
+    });
+
+    // Save the business to the database
+    const savedBusiness = await newBusiness.save();
+
+    res.status(201).json({ message: 'Business created successfully', business: savedBusiness });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to create business' });
+  }
 });
+
 
 module.exports = router;

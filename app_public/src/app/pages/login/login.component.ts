@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import {RestService} from '../../rest.service';
 
 @Component({
   selector: 'app-login',
@@ -6,11 +7,20 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  constructor() {}
+  email: string = '';
+  password: string = '';
+
+  constructor(private rest: RestService) {}
 
   ngOnInit() {
   }
   ngOnDestroy() {
+  }
+
+  signIn() {
+    this.rest.logIn(this.email, this.password)
+    localStorage.setItem('logged', 'true');
+    console.log(this.email)
   }
 
 }

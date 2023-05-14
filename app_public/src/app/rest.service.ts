@@ -1,8 +1,9 @@
 
 import {Inject, Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Influencer} from "./pages/dashboard/dashboard.component";
+import { Router } from '@angular/router';
 
 import {catchError, Observable, retry, throwError} from "rxjs";
 
@@ -11,7 +12,7 @@ import {catchError, Observable, retry, throwError} from "rxjs";
 })
 export class RestService {
 
-  constructor(private http: HttpClient, private modalService: NgbModal) { }
+  constructor(private http: HttpClient, private modalService: NgbModal, private router: Router) { }
 
   private apiUrl = "http://localhost:3000/api";
 
@@ -42,4 +43,25 @@ export class RestService {
             `Prišlo je do napake '${napaka.message}' z opisom`
     );
   }
-}
+
+  public logIn(email: String, password: String) {
+    const body = {
+      email: email,
+      password: password
+    };
+
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    const url: string =`${this.apiUrl}/businesses/login`;
+
+    this.http.post(url, body, { headers, withCredentials: true }).subscribe(
+      response => {
+        console.log('Response:', response);
+        this.router.navigate(['/dashboard'])
+      },
+      error => {
+        console.error('Error:', error);
+        // Handle the error
+      }
+    );
+}}

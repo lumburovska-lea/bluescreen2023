@@ -11,7 +11,10 @@ require('./app_api/passport')
 
 const app = express();
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:4200', // Allow the Angular app's domain
+  credentials: true // Allow credentials (cookies)
+}));
 app.use(passport.initialize())
 app.use(logger('dev'))
 app.use(cookies());
