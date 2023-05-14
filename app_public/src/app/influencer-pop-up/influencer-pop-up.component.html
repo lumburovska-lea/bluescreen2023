@@ -5,9 +5,11 @@
       <p style="color:red;">Age: {{influencer.age}}</p>
     </div>
     <div class="modal-body">
+        <div><b>In:</b> {{influencer.country}}</div>
         <div style="color:gray;">{{influencer.email}}</div>
-        <div>{{influencer.bio}}</div>
+        <div><b>Description:</b> {{influencer.bio}}</div>
         <div style="display: flex;">
+            <div>🏷️</div>
             <div *ngFor="let tag of influencer.tags">
             <h5 class="card-title text-uppercase text-muted mb-0" style="padding-right: 8px;">{{tag}}</h5>
             </div>
