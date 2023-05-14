@@ -81,6 +81,7 @@ export class RestService {
     this.http.post(url, body, { headers, withCredentials: true }).subscribe(
       response => {
         console.log('Response:', response);
+        localStorage.setItem('logged', 'true');
         this.router.navigate(['/login'])
       },
       error => {

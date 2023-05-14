@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   signIn() {
     this.rest.logIn(this.email, this.password)
-    localStorage.setItem('logged', 'true');
+
     console.log(this.email)
   }
 
