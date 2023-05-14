@@ -9,7 +9,7 @@ declare interface RouteInfo {
 }
 export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'Dashboard',  icon: 'ni-tv-2 text-primary', class: '' },
-    { path: '/user-profile', title: 'User profile',  icon:'ni-single-02 text-yellow', class: '' },
+    { path: '/user-profile', title: 'Your profile',  icon:'ni-single-02 text-yellow', class: '' },
     { path: '/login', title: 'Login',  icon:'ni-key-25 text-info', class: '' },
     { path: '/register', title: 'Register',  icon:'ni-circle-08 text-pink', class: '' }
 ];
@@ -37,6 +37,14 @@ export class SidebarComponent implements OnInit {
       for(var i = 0; i < 4; i++) {
         console.log(this.menuItems[i].path)
         if(this.menuItems[i].path === '/login' || this.menuItems[i].path === '/register') {
+          this.menuItems.splice(i, 1)
+          i--;
+        }
+      }
+    } else {
+      for(var i = 0; i < 4; i++) {
+        console.log(this.menuItems[i].path)
+        if(this.menuItems[i].path === '/user-profile') {
           this.menuItems.splice(i, 1)
           i--;
         }
