@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {RestService} from '../../rest.service';
 
 @Component({
   selector: 'app-register',
@@ -7,14 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterComponent implements OnInit {
 
-  private name = '';
-  private email = '';
-  private bio = '';
-  private password = '';
+  name: string = '';
+  email: string = '';
+  bio: string = '';
+  password: string = '';
 
-  constructor() { }
+  constructor(private rest: RestService) { }
 
   ngOnInit() {
+  }
+
+  register() {
+    this.rest.register(this.email, this.password, this.name, this.bio)
   }
 
 }

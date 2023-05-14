@@ -52,9 +52,9 @@ export class RestService {
 
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-    const url: string =`${this.apiUrl}/businesses/login`;
+    const url: string = `${this.apiUrl}/businesses/login`;
 
-    this.http.post(url, body, { headers, withCredentials: true }).subscribe(
+    this.http.post(url, body, {headers, withCredentials: true}).subscribe(
       response => {
         console.log('Response:', response);
         this.router.navigate(['/dashboard'])
@@ -64,4 +64,29 @@ export class RestService {
         // Handle the error
       }
     );
-}}
+  }
+
+  public register(email: String, password: String, name: String, bio: String) {
+    const body = {
+      email: email,
+      password: password,
+      bio: bio,
+      name: name
+    };
+
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    const url: string =`${this.apiUrl}/businesses/register`;
+
+    this.http.post(url, body, { headers, withCredentials: true }).subscribe(
+      response => {
+        console.log('Response:', response);
+        this.router.navigate(['/login'])
+      },
+      error => {
+        console.error('Error:', error);
+        // Handle the error
+      }
+    );
+  }
+}
