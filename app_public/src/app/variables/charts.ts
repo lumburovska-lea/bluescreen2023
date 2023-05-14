@@ -295,7 +295,7 @@ export const chartExample1 = {
         ticks: {
           callback: function(value) {
             if (!(value % 10)) {
-              return '$' + value + 'k';
+              return value + 'M';
             }
           }
         }
@@ -303,10 +303,10 @@ export const chartExample1 = {
     }
   },
   data: {
-    labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    labels: ['Instagram', 'Tiktok', 'Facebook', 'Youtube', 'WhatsApp', 'Snapchat'],
     datasets: [{
-      label: 'Performance',
-      data: [0, 20, 10, 30, 15, 40, 20, 60, 60]
+      label: 'MAU',
+      data: [2000, 1051, 2958, 2514, 2000, 635]
     }]
   }
 }
@@ -320,7 +320,7 @@ export const chartExample2 = {
             callback: function(value) {
               if (!(value % 10)) {
                 //return '$' + value + 'k'
-                return value;
+                return value + "M";
               }
             }
           }
@@ -343,11 +343,11 @@ export const chartExample2 = {
     }
   },
   data: {
-    labels: ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    labels: ["Jan 2018", "Dec 2018", "Dec 2019", "July 2020", "Sept 2021", "Jan 2022", "Dec 2022", "Apr 2023"],
     datasets: [
       {
-        label: "Sales",
-        data: [25, 20, 30, 22, 17, 29],
+        label: "Users",
+        data: [54, 271, 507, 689, 1000, 1398, 1534, 1601],
         maxBarThickness: 10
       }
     ]

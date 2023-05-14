@@ -36,8 +36,7 @@ export class DashboardComponent implements OnInit {
     this.getInfluencers()
 
     this.datasets = [
-      [0, 20, 10, 30, 15, 40, 20, 60, 60],
-      [0, 20, 5, 25, 10, 30, 15, 40, 40]
+      [54, 271, 507, 689, 1000, 1398, 1534, 1601]
     ];
     this.data = this.datasets[0];
 
@@ -49,16 +48,16 @@ export class DashboardComponent implements OnInit {
 
     var ordersChart = new Chart(chartOrders, {
       type: 'bar',
-      options: chartExample2.options,
-      data: chartExample2.data
+      options: chartExample1.options,
+      data: chartExample1.data
     });
 
     var chartSales = document.getElementById('chart-sales');
 
     this.salesChart = new Chart(chartSales, {
 			type: 'line',
-			options: chartExample1.options,
-			data: chartExample1.data
+			options: chartExample2.options,
+			data: chartExample2.data
 		});
   }
 
