@@ -57,6 +57,8 @@ export class RestService {
     this.http.post(url, body, {headers, withCredentials: true}).subscribe(
       response => {
         console.log('Response:', response);
+        localStorage.setItem('logged', 'true');
+        localStorage.setItem('current_business', JSON.stringify(response))
         this.router.navigate(['/dashboard'])
       },
       error => {
@@ -81,7 +83,6 @@ export class RestService {
     this.http.post(url, body, { headers, withCredentials: true }).subscribe(
       response => {
         console.log('Response:', response);
-        localStorage.setItem('logged', 'true');
         this.router.navigate(['/login'])
       },
       error => {

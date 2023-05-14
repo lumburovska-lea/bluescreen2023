@@ -95,6 +95,8 @@ router.post('/businesses/login',
             aud: 'localhost:3000',
             exp: Math.floor(Date.now() / 1000) + 604800, // 1 week (7×24×60×60=604800s) from now
             role: 'business', // just to show a private JWT field
+            name: req.user.name,
+            bio: req.user.bio
           }
 
           // generate a signed json web token. By default the signing algorithm is HS256 (HMAC-SHA256), i.e. we will 'sign' with a symmetric secret
@@ -111,7 +113,7 @@ router.post('/businesses/login',
           }
           console.log(token)
           res.cookie('jwt', token, cookieOptions)
-          res.send({jwt: token})
+          res.send({name: jwtClaims.name, email: jwtClaims.sub, bio: jwtClaims.bio})
 
           // And let us log a link to the jwt.io debugger, for easy checking/verifying:
           // console.log(`Token sent. Debug at https://jwt.io/?value=${token}`)
@@ -140,6 +142,15 @@ router.post('/businesses/register', async (req, res) => {
     res.status(500).json({ error: 'Failed to create business' });
   }
 });
+
+router.get(
+    '/businesses/current',
+    passport.authenticate('jwtCookie', { session: false, failureRedirect: '/login' }),
+    (req, res) => {
+      const userToken = jwt.decode(req.cookies.jwt)
+      res.send({name: userToken.name, email: userToken.email, bio: userToken.bio})
+    }
+)
 
 
 module.exports = router;
